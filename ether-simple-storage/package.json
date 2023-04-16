@@ -6,7 +6,7 @@
 	"scripts": {
 		"compile": "solcjs --bin --abi --include-path node_modules/ --base-path . -o . SimpleStorage.sol",
 		"build": "tsc",
-		"deploy": "node dist/deploy.js"
+		"deploy": "tsc && node dist/deploy.js"
 	},
 	"dependencies": {
 		"ethers": "^6.3.0",

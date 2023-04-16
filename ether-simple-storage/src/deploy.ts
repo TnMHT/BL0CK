@@ -1,11 +1,5 @@
 import { ethers } from 'ethers';
-import * as fs from 'fs';
-
-(async () => {
-	// COMPILE THEM IN OUR CODE
-	// COMPILE THEM SEPERATELY S
-	// HTTP://127.0.0.1:7545
-})();
+import fs from 'fs';
 
 async function main() {
 	const rpcServer = 'HTTP://127.0.0.1:7545';
@@ -24,7 +18,9 @@ async function main() {
 	const contractFactory = new ethers.ContractFactory(abi, binrary, wallet);
 	console.log('DEPLOYING CONTRACT. WAIT...');
 	const contract = await contractFactory.deploy(); // STOP HERE. WAIT FOR CONTRACT TO DEPLOY
-	console.log(contract);
+	const deploymentReceipt = await contract.deploymentTransaction();
+	//console.log(contract);
+	console.log(deploymentReceipt);
 }
 
 main();
