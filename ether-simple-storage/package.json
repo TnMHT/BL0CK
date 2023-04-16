@@ -1,9 +1,20 @@
 {
-  "dependencies": {
-    "g": "^2.0.1",
-    "solc": "^0.8.19"
-  },
-  "scripts": {
-    "compile" : "solcjs --bin --abi --include-path node_modules/ --base-path . -o . SimpleStorage.sol"
-  }
+	"name": "BL0CK",
+	"version": "1.0.0",
+	"main": "deploy.ts",
+	"type": "module",
+	"scripts": {
+		"compile": "solcjs --bin --abi --include-path node_modules/ --base-path . -o . SimpleStorage.sol",
+		"build": "tsc",
+		"deploy": "node dist/deploy.js"
+	},
+	"dependencies": {
+		"ethers": "^6.3.0",
+		"g": "^2.0.1",
+		"solc": "^0.8.19"
+	},
+	"devDependencies": {
+		"@types/node": "^18.15.11",
+		"typescript": "^5.0.4"
+	}
 }
