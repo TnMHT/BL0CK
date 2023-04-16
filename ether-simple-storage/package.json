@@ -9,12 +9,14 @@
 		"deploy": "tsc && node dist/deploy.js"
 	},
 	"dependencies": {
+		"@typechain/ethers-v6": "^0.3.0",
 		"ethers": "^6.3.0",
 		"g": "^2.0.1",
 		"solc": "^0.8.19"
 	},
 	"devDependencies": {
 		"@types/node": "^18.15.11",
+		"typechain": "^8.1.1",
 		"typescript": "^5.0.4"
 	}
 }
