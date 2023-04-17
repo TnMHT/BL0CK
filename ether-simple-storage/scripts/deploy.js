@@ -1,5 +1,6 @@
 import { ethers } from 'ethers';
 import fs from 'fs';
+
 async function main() {
 	const rpcServer = 'HTTP://127.0.0.1:7545';
 	const privateKey =
@@ -20,14 +21,18 @@ async function main() {
 	// DEPLOY THE CONTRACT
 	const contract = await contractFactory.deploy(); // STOP HERE. WAIT FOR CONTRACT TO DEPLOY
 	await contract.deploymentTransaction();
-	console.log(contract);
-	// GET NUMBER
-	const retriveFunction = await contract.getFunction('retrieve');
+
+	// console.log(contract);
+
+	// GET INTIAL NUMBER
 	const currentFavNumber = await contract.retrieve();
-	console.log(currentFavNumber);
+	console.log(`CURRENT FAV NUMBER: ${currentFavNumber.toString()}`);
+	// UPDATE CONTRACT
+	const transactionResponse = await contract.store('7'); // GET RESPONSE
+	const transactionReceipt = await transactionResponse.wait(1); // GET RECEIPT
+	// GET UPDATED NUMBER
+	const updatedFavoriteNumber = await contract.retrieve();
+	console.log(`UPDATED FAV NUMBER: ${updatedFavoriteNumber.toString()}`);
 }
-main().catch((err) => {
-	console.error(err);
-	process.exitCode = 1;
-});
-//# sourceMappingURL=deploy.js.map
+
+main();

@@ -22,12 +22,12 @@ async function main() {
 	const contract = await contractFactory.deploy(); // STOP HERE. WAIT FOR CONTRACT TO DEPLOY
 	await contract.deploymentTransaction();
 
-	console.log(contract);
+	//console.log(contract);
 
 	// GET NUMBER
-	const retriveFunction = await contract.getFunction('retrieve');
-	const currentFavNumber = await contract.retrieve();
-	console.log(currentFavNumber);
+	//const retriveFunction = await contract.getFunction('retrieve');
+	//const currentFavNumber = await contract.retrieve();
+	//console.log(currentFavNumber);
 }
 
 main();

@@ -1,12 +1,13 @@
 {
-	"name": "BL0CK",
+	"name": "bl0ck",
 	"version": "1.0.0",
 	"main": "deploy.ts",
 	"type": "module",
 	"scripts": {
 		"compile": "solcjs --bin --abi --include-path node_modules/ --base-path . -o . SimpleStorage.sol",
 		"build": "tsc",
-		"deploy": "tsc && node dist/deploy.js"
+		"deploy": "tsc && node dist/deploy.js",
+		"eth": "node scripts/deploy.js"
 	},
 	"dependencies": {
 		"@typechain/ethers-v6": "^0.3.0",
