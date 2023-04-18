@@ -5,8 +5,6 @@ contract SimpleStorage {
     // DECLARING OUR VARIABLES/ TYPES
     uint256 favoriteNumber; // initialized to zero
 
-    mapping(string => uint256) public nameToFavoriteNum;
-
     // STRUCT CREATES OUR OWN TYPES
     struct People {
         uint256 favoriteNumber;
@@ -14,6 +12,8 @@ contract SimpleStorage {
     }
 
     People[] public people;
+
+    mapping(string => uint256) public nameToFavoriteNum;
 
     // FUNCTIONS
     function store(uint256 _favoriteNum) public virtual {
