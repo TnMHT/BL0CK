@@ -2,6 +2,8 @@ import { HardhatUserConfig } from 'hardhat/config';
 import '@nomicfoundation/hardhat-toolbox';
 import '@nomiclabs/hardhat-etherscan';
 import * as dotenv from 'dotenv';
+import { blockNumber } from './tasks/blockNumber';
+
 dotenv.config();
 
 const SEPOLIA_RPC_URL = process.env.SEPOLIA_RPC_URL;
@@ -20,6 +22,9 @@ const config: HardhatUserConfig = {
 		// Your API key for Etherscan
 		// Obtain one at https://etherscan.io/
 		apiKey: ETHERSCAN_API_KEY,
+	},
+	tasks: {
+		blockNumber,
 	},
 };
 
