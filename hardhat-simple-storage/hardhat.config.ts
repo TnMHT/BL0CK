@@ -4,6 +4,7 @@ import '@nomiclabs/hardhat-etherscan';
 import * as dotenv from 'dotenv';
 import { blockNumber } from './tasks/blockNumber';
 import 'hardhat-gas-reporter';
+import 'solidity-coverage';
 dotenv.config();
 
 const SEPOLIA_RPC_URL = process.env.SEPOLIA_RPC_URL || '';

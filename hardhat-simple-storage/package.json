@@ -1,22 +1,23 @@
 {
-  "name": "hardhat-simple-storage",
-  "version": "1.0.0",
-  "description": "HardHat ETH BL0CK",
-  "main": "index.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@nomicfoundation/hardhat-toolbox": "^2.0.2",
-    "@nomiclabs/hardhat-etherscan": "^3.1.7"
-  },
-  "dependencies": {
-    "@nomiclabs/hardhat-ethers": "^2.2.3",
-    "dotenv": "^16.0.3",
-    "hardhat": "^2.14.0",
-    "hardhat-gas-reporter": "^1.0.9",
-    "undici": "^5.21.2"
-  }
+	"name": "hardhat-simple-storage",
+	"version": "1.0.0",
+	"description": "HardHat ETH BL0CK",
+	"main": "index.ts",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"@nomicfoundation/hardhat-toolbox": "^2.0.2",
+		"@nomiclabs/hardhat-etherscan": "^3.1.7"
+	},
+	"dependencies": {
+		"@nomiclabs/hardhat-ethers": "^2.2.3",
+		"dotenv": "^16.0.3",
+		"hardhat": "^2.14.0",
+		"hardhat-gas-reporter": "^1.0.9",
+		"solidity-coverage": "^0.8.2",
+		"undici": "^5.21.2"
+	}
 }
