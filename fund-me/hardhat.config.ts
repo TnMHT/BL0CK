@@ -13,7 +13,10 @@ const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || '';
 const COINMARKET_API_KEY = process.env.COINMARKET_API_KEY || '';
 
 const config: HardhatUserConfig = {
-	solidity: '0.8.18',
+	// solidity: '0.8.18',
+	solidity: {
+		compilers: [{ version: '0.6.6' }, { version: '0.8.18' }],
+	},
 	defaultNetwork: 'hardhat',
 	networks: {
 		sepolia: {
