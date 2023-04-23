@@ -1,16 +1,11 @@
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import { DeployFunction } from 'hardhat-deploy/types';
-
-import {
-	developmentChains,
-	DECIMALS,
-	INITIAL_PRICE,
-} from '../helper.hardhat.config';
+import { DECIMALS, INITIAL_PRICE } from '../helper.hardhat.config';
 
 export const deployMocks: DeployFunction = async (
 	hre: HardhatRuntimeEnvironment
 ) => {
-	const { getNamedAccounts, deployments, network } = hre;
+	const { deployments, getNamedAccounts, network } = hre;
 	const { deploy, log } = deployments;
 	const { deployer } = await getNamedAccounts();
 	const chainId = network.config.chainId;
@@ -27,5 +22,5 @@ export const deployMocks: DeployFunction = async (
 		log('----------------------------------------------------------------');
 	}
 };
-
+export default deployMocks;
 deployMocks.tags = ['all', 'mocks'];
