@@ -1,21 +1,47 @@
 // SPDX-License-Identifier: MIT
+// PRAGMA:
 pragma solidity ^0.8.9;
-
-import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
+// IMPORTS
 import "./PriceConverter.sol";
+// ERROR CODES
+error FundMe__NotOwner();
+
+// INTERFACES, LIBRARIES, CONTRACTS
+
+/**
+ * @title A Contact for crown funding
+ * @author 0013
+ * @notice This contract is to demo a sample funding contract
+ * @dev this implements price feeds as our library
+ */
 
 contract FundMe {
+    // TYPE DELCARATIONS
     using PriceConverter for uint256;
-
+    // STATE VARIABLES
     mapping(address => uint256) public s_addressToAmountFunded;
     address[] public s_funders;
     address public s_owner;
     AggregatorV3Interface public s_priceFeed;
 
+    // MODIFIERS
+
+    modifier onlyOwner() {
+        //require(msg.sender == s_owner);
+        if (msg.sender != s_owner) revert FundMe__NotOwner();
+        _;
+    }
+
+    // FUNCTIONS
     constructor(address priceFeed) {
         s_priceFeed = AggregatorV3Interface(priceFeed);
         s_owner = msg.sender;
     }
+
+    /**
+     * @notice this function funds this contract
+     * @dev this implements price feeds as our library
+     */
 
     function fund() public payable {
         uint256 minimumUSD = 50 * 10 ** 18;
@@ -30,11 +56,6 @@ contract FundMe {
 
     function getVersion() public view returns (uint256) {
         return s_priceFeed.version();
-    }
-
-    modifier onlyOwner() {
-        require(msg.sender == s_owner);
-        _;
     }
 
     function withdraw() public payable onlyOwner {
