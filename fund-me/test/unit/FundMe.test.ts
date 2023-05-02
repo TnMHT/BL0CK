@@ -86,5 +86,51 @@ describe('FundMe', async () => {
 				endingDeployerBalance.add(gasCost).toString()
 			);
 		});
+
+		it('allows us to withdraw with multiple funders', async () => {
+			// ARRANGE
+			const accounts = await ethers.getSigners();
+			for (let i = 0; i < 6; i++) {
+				const fundMeConnectedContract = await fundMe.connect(accounts[i]);
+				await fundMeConnectedContract.fund({ value: sendValue });
+			}
+			const startingFundMeBalance = await fundMe.provider.getBalance(
+				fundMe.address
+			);
+			const startingDeployerBalance = await fundMe.provider.getBalance(
+				deployer.address
+			);
+
+			// ACT
+			const transactionResponse = await fundMe.cheaperWithdraw();
+			// COMPARE GAS COST
+			// const transactionResponse = await fundMe.withdraw();
+			const transactionReceipt = await transactionResponse.wait();
+			const { gasUsed, effectiveGasPrice } = transactionReceipt;
+			const withdrawGasCost = gasUsed.mul(effectiveGasPrice);
+			console.log(`GasCost: ${withdrawGasCost}`);
+			console.log(`GasUsed: ${gasUsed}`);
+			console.log(`GasPrice: ${effectiveGasPrice}`);
+			const endingFundMeBalance = await fundMe.provider.getBalance(
+				fundMe.address
+			);
+			const endingDeployerBalance = await fundMe.provider.getBalance(
+				deployer.address
+			);
+			// ASSERT
+			assert.equal(
+				startingFundMeBalance.add(startingDeployerBalance).toString(),
+				endingDeployerBalance.add(withdrawGasCost).toString()
+			);
+			await expect(fundMe.s_funders(0)).to.be.reverted;
+			for (let i = 1; i < 6; i++) {
+				assert.equal(
+					(
+						await fundMe.s_addressToAmountFunded(accounts[i].address)
+					).toString(),
+					'0'
+				);
+			}
+		});
 	});
 });
