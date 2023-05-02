@@ -4,35 +4,38 @@ import { network } from 'hardhat';
 import { developmentChains, networkConfig } from '../helper.hardhat.config';
 import { verify } from '../utils/verify';
 
-const deployFundMe: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
+const deployFundMe: DeployFunction = async function (
+	hre: HardhatRuntimeEnvironment
+) {
+	// @ts-ignore
 	const { getNamedAccounts, deployments, network } = hre;
-	const { deploy, log, get } = deployments;
+	const { deploy, log } = deployments;
 	const { deployer } = await getNamedAccounts();
 	const chainId: number = network.config.chainId!;
 
-	let ethUsdPriceFeedAddress;
-	if (developmentChains.includes(network.name)) {
-		const ethUsdAggregator = await get('MockV3Aggregator');
+	let ethUsdPriceFeedAddress: string;
+	if (chainId == 31337) {
+		const ethUsdAggregator = await deployments.get('MockV3Aggregator');
 		ethUsdPriceFeedAddress = ethUsdAggregator.address;
 	} else {
-		ethUsdPriceFeedAddress = networkConfig[network.name].ethUsdPriceFeed!
+		ethUsdPriceFeedAddress = networkConfig[network.name].ethUsdPriceFeed!;
 	}
-	const args = [ethUsdPriceFeedAddress];
+	log('----------------------------------------------------');
+	log('Deploying FundMe and waiting for confirmations...');
 	const fundMe = await deploy('FundMe', {
 		from: deployer,
-		args: args,
+		args: [ethUsdPriceFeedAddress],
 		log: true,
-		waitConfirmations:6 , 
+		// we need to wait if on a live network so we can verify properly
+		waitConfirmations: networkConfig[network.name].blockConfirmations || 0,
 	});
-
+	log(`FundMe deployed at ${fundMe.address}`);
 	if (
 		!developmentChains.includes(network.name) &&
 		process.env.ETHERSCAN_API_KEY
 	) {
-		await verify(fundMe.address, args );
+		await verify(fundMe.address, [ethUsdPriceFeedAddress]);
 	}
-
-	log('----------------------------------------------------------------');
 };
 export default deployFundMe;
-module.exports.tags = ['all', 'fundme'];
+deployFundMe.tags = ['all', 'fundMe'];
