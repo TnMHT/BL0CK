@@ -1,35 +1,47 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import './App.css';
+import { useEffect, useState } from 'react';
+import detectEthereumProvider from '@metamask/detect-provider';
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+	const [hasProvider, setHasProvider] = useState<boolean | null>(null);
+	const initialState = { accounts: [] };
+	const [wallet, setWallet] = useState(initialState);
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+	useEffect(() => {
+		const getProvider = async () => {
+			const provider = await detectEthereumProvider({ silent: true });
+			console.log(provider);
+			setHasProvider(Boolean(provider));
+		};
+		getProvider();
+	}, []);
 
-export default App
+	const connectWallet = async () => {
+		try {
+			let accounts = await window.ethereum.request({
+				method: 'eth_requestAccounts',
+				params: [],
+			});
+			setWallet({ accounts });
+		} catch (err) {
+			console.error(err);
+		}
+	};
+
+	return (
+		<>
+			{!hasProvider ? (
+				<>METAMASK NOT DETECTED</>
+			) : hasProvider ? (
+				<button onClick={connectWallet}>Connect MetaMask</button>
+			) : (
+				<>NOT CONNECTED</>
+			)}
+			{hasProvider && wallet.accounts.length > 0 && (
+				<div>Wallet Accounts : {wallet.accounts[0]}</div>
+			)}
+		</>
+	);
+};
+
+export default App;
