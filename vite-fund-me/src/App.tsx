@@ -6,7 +6,7 @@ const App = () => {
 	return (
 		<>
 			<Connect />
-			<Fund ethAmount={77} />
+			<Fund />
 		</>
 	);
 };
