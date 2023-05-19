@@ -2,7 +2,14 @@ import { ethers } from 'ethers';
 import { ABI, CONTRACT_ADDRESS } from '../constants';
 import { useState } from 'react';
 
-const Fund = () => {
+interface FundProps {
+	listenForTransactionMine: (
+		transactionResponse: { hash: any },
+		provider: ethers.BrowserProvider
+	) => Promise<void>;
+}
+
+const Fund: React.FC<FundProps> = ({ listenForTransactionMine }) => {
 	// READ ONLY CONNECTION TO THE BLOCKCHAIN
 	const [ethAmount, setEthAmount] = useState('0.00000007');
 	const fundWallet = async () => {
@@ -23,21 +30,21 @@ const Fund = () => {
 			console.error(err);
 		}
 	};
-	const listenForTransactionMine = (
-		transactionResponse: { hash: any },
-		provider: ethers.BrowserProvider
-	) => {
-		console.log(`MINING ${transactionResponse.hash}....`);
-		// CREATE A LISTENER FOR THE BLOCKCHAIN
-		return new Promise<void>((resolve, reject) => {
-			provider.once(transactionResponse.hash, (transactionReceipt) => {
-				console.log(
-					`COMPLETED WITH ${transactionReceipt.confirmations} CONFIRMATIONS `
-				);
-				resolve();
-			});
-		});
-	};
+	// const listenForTransactionMine = (
+	// 	transactionResponse: { hash: any },
+	// 	provider: ethers.BrowserProvider
+	// ) => {
+	// 	console.log(`MINING ${transactionResponse.hash}....`);
+	// 	// CREATE A LISTENER FOR THE BLOCKCHAIN
+	// 	return new Promise<void>((resolve, reject) => {
+	// 		provider.once(transactionResponse.hash, (transactionReceipt) => {
+	// 			console.log(
+	// 				`COMPLETED WITH ${transactionReceipt.confirmations} CONFIRMATIONS `
+	// 			);
+	// 			resolve();
+	// 		});
+	// 	});
+	// };
 
 	return (
 		<>
