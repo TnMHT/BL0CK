@@ -1,9 +1,10 @@
 import { ethers } from 'ethers';
 import { ABI, CONTRACT_ADDRESS } from '../constants';
+import { useState } from 'react';
 
 const Fund = () => {
 	// READ ONLY CONNECTION TO THE BLOCKCHAIN
-	const ethAmount = '.00000007';
+	const [ethAmount, setEthAmount] = useState('0.00000007');
 	const fundWallet = async () => {
 		try {
 			const provider = new ethers.BrowserProvider(window.ethereum);
@@ -41,6 +42,14 @@ const Fund = () => {
 	return (
 		<>
 			<button onClick={() => fundWallet()}>FUND</button>
+			<label htmlFor='fund'>ETH AMOUNT</label>
+			<input
+				type='text'
+				id='ethAmount'
+				placeholder='.00000007'
+				value={ethAmount}
+				onChange={(e) => setEthAmount(e.target.value)}
+			/>
 		</>
 	);
 };
