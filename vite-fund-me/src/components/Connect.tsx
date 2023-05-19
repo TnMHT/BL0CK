@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import detectEthereumProvider from '@metamask/detect-provider';
+import Button from '@mui/joy/Button';
 
 const Connect = () => {
 	const [hasProvider, setHasProvider] = useState<boolean | null>(null);
@@ -31,7 +32,7 @@ const Connect = () => {
 			{!hasProvider ? (
 				<>METAMASK NOT DETECTED</>
 			) : hasProvider ? (
-				<button onClick={connectWallet}>Connect MetaMask</button>
+				<Button onClick={connectWallet}>Connect MetaMask</Button>
 			) : (
 				<>NOT CONNECTED</>
 			)}

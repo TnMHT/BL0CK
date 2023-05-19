@@ -1,5 +1,6 @@
 import { ethers } from 'ethers';
 import { ABI, CONTRACT_ADDRESS } from '../constants';
+import Button from '@mui/joy/Button';
 
 interface WithdrawProps {
 	listenForTransactionMine: (
@@ -23,9 +24,9 @@ const Withdraw: React.FC<WithdrawProps> = ({ listenForTransactionMine }) => {
 	};
 	return (
 		<>
-			<button id='balanceButton' onClick={() => goWithdraw()}>
+			<Button id='balanceButton' onClick={() => goWithdraw()}>
 				WITHDRAW
-			</button>
+			</Button>
 		</>
 	);
 };

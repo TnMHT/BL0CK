@@ -1,5 +1,6 @@
 import { ethers } from 'ethers';
 import { CONTRACT_ADDRESS } from '../constants';
+import Button from '@mui/joy/Button';
 
 const Balance = () => {
 	const getBalance = async () => {
@@ -13,9 +14,9 @@ const Balance = () => {
 	};
 	return (
 		<>
-			<button id='balanceButton' onClick={() => getBalance()}>
+			<Button id='balanceButton' onClick={() => getBalance()}>
 				GET BALANCE
-			</button>
+			</Button>
 		</>
 	);
 };
